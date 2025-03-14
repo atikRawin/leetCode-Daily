@@ -1,17 +1,19 @@
 
 class Solution {
  public:
-  bool hasCycle(ListNode* head) {
-    ListNode* slow = head;
-    ListNode* fast = head;
+  vector<int> preorderTraversal(TreeNode* root) {
+    vector<int> ans;
+    preorder(root, ans);
+    return ans;
+  }
 
-    while (fast != nullptr && fast->next != nullptr) {
-      slow = slow->next;
-      fast = fast->next->next;
-      if (slow == fast)
-        return true;
-    }
+ private:
+  void preorder(TreeNode* root, vector<int>& ans) {
+    if (root == nullptr)
+      return;
 
-    return false;
+    ans.push_back(root->val);
+    preorder(root->left, ans);
+    preorder(root->right, ans);
   }
 };
