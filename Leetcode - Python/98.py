@@ -1,17 +1,15 @@
-
 class Solution:
   def isValidBST(self, root: TreeNode | None) -> bool:
-    stack = []
-    pred = None
-
-    while root or stack:
-      while root:
-        stack.append(root)
-        root = root.left
-      root = stack.pop()
-      if pred and pred.val >= root.val:
+    def isValidBST(root: TreeNode | None,
+                   minNode: TreeNode | None, maxNode: TreeNode | None) -> bool:
+      if not root:
+        return True
+      if minNode and root.val <= minNode.val:
         return False
-      pred = root
-      root = root.right
+      if maxNode and root.val >= maxNode.val:
+        return False
 
-    return True
+      return (isValidBST(root.left, minNode, root) and
+              isValidBST(root.right, root, maxNode))
+
+    return isValidBST(root, None, None)
